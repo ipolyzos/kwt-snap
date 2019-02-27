@@ -6,7 +6,7 @@
 # Snap author: Ioannis Polyzos 
 
 name: kwt
-version: 'v0.0.4'
+version: 'v0.0.5'
 summary: kwt CLI Snap Package
 description: |
   Kubernetes Workstation Tools CLI (kwt) CLI CLI Snap package
