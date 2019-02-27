@@ -1,0 +1,54 @@
+# Description: 
+#   Snap package for the Kubernetes Workstation Tools (kw) CLI
+#
+# Github: https://github.com/cppforlife/kwt
+#
+# Snap author: Ioannis Polyzos 
+
+name: kwt
+version: 'v0.0.4'
+summary: kwt CLI Snap Package
+description: |
+  Kubernetes Workstation Tools CLI (kwt) CLI CLI Snap package
+
+grade: stable
+confinement: strict 
+
+parts:
+ kubectl:
+   after: [kwt]
+   plugin: dump
+   build-attributes: [no-patchelf]
+   build-packages:
+   - curl
+   - openssl
+   - file 
+   stage-packages:
+   - net-tools
+   - util-linux
+   - zfsutils-linux
+   - socat
+   - iproute2
+   - dpkg
+   source: .
+   override-build:
+     curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl 
+
+
+     chmod +x kubectl
+
+     chmod +x kubectl
+ 
+
+     mv kubectl ${SNAPCRAFT_PART_INSTALL}/bin/
+ kwt:
+    source-type: git
+    source: https://github.com/cppforlife/kwt
+    source-tag: ${SNAPCRAFT_PROJECT_VERSION}
+    plugin: go 
+    go-importpath: github.com/cppforlife/kwt
+
+apps:
+  kwt:
+    command: bin/kwt
+    plugs: [home,network]
